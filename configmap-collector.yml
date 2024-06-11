@@ -12,6 +12,17 @@ data:
         protocols:
           grpc: # Enables gRPC protocol for OTLP receiver
           http:  # Enables HTTP protocol for OTLP receiver
+      hostmetrics:
+        collection_interval: 1m
+        scrapers:
+          cpu:
+          load:
+          memory:
+          disk:
+          filesystem:
+          network:
+          paging:
+          processes:     
 
       # This defines a receiver for kubelet stats. It collects metrics from the kubelet about nodes, pods, and containers.
       kubeletstats:
@@ -84,7 +95,7 @@ data:
       pipelines:
         # This pipeline processes metrics data
         metrics:
-          receivers: [otlp, kubeletstats, k8s_cluster]
+          receivers: [otlp, kubeletstats, k8s_cluster, hostmetrics]
           processors: [batch]
           exporters: [prometheusremotewrite, debug]
 
